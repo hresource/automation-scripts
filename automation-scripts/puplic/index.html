@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Automation Dashboard</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  button { margin: 5px; padding: 10px 20px; }
+  pre { background: #f4f4f4; padding: 10px; height: 300px; overflow-y: auto; }
+</style>
+</head>
+<body>
+<h1>Automation Scripts Dashboard</h1>
+<button onclick="runAll()">Run All Scripts</button>
+<button onclick="runScript('xfinity')">Run Xfinity</button>
+<button onclick="runScript('yahoo')">Run Yahoo</button>
+<button onclick="runScript('google')">Run Google</button>
+<button onclick="runScript('microsoft')">Run Microsoft</button>
+
+<pre id="output">Results will appear here...</pre>
+
+<script>
+function runAll() {
+  document.getElementById('output').textContent = 'Running all scripts...';
+  fetch('/run-all')
+    .then(res => res.text())
+    .then(text => {
+      document.getElementById('output').textContent = text;
+    });
+}
+
+function runScript(name) {
+  document.getElementById('output').textContent = 'Running ' + name + '...';
+  fetch('/run/' + name)
+    .then(res => res.text())
+    .then(text => {
+      document.getElementById('output').textContent = text;
+    });
+}
+</script>
+</body>
+</html>
